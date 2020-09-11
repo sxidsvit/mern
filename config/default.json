@@ -1,0 +1,5 @@
+{
+  "port": 5100,
+  "jwtSecret": "sxidsvit the best programmer",
+  "mongoURI": "mongodb+srv://sxidsvit:1234qwer@cluster0.b7vva.azure.mongodb.net/app?retryWrites=true&w=majority"
+}
