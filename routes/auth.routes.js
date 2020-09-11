@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const config = require('config');
 const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
@@ -13,7 +13,6 @@ router.post('/register',
       .isLength({ min: 6 }),
   ],
   async (req, res) => {
-    console.log('req.body: ', req.body)
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -25,7 +24,6 @@ router.post('/register',
 
       const { email, password } = req.body
       const candidate = await User.findOne({ email })
-      console.log('candidate: ', candidate);
       if (candidate) {
         return res.status(400).json({ "message": "This user already exists" })
       }
@@ -43,44 +41,48 @@ router.post('/register',
 
   })
 
-router.post('/login', async (req, res) => {
+router.post('/login',
   [
-    check('email', 'Incorrect email').normalizeEmail().isEmail(),
+    check('email', 'Incorrect email').isEmail(),
     check('password', 'Enter password').exists()
   ],
-    async (req, res) => {
-      try {
-        const errors = validationResult(req)
-        if (!errors.isEmpty()) {
-          return res.status(400).json({
-            errors: errors.array(),
-            message: 'Incorrect login data'
-          })
-        }
-
-        const { email, password } = req.body
-        const user = User.findOne({ email })
-        if (!user) {
-          return req.status(400).json({ message: 'There is no user with this email' })
-        }
-        const isMatched = await bcrypt.compare(password, user.password)
-        if (!isMatched) {
-          return res.status(400).json({ message: 'Wrong password' })
-        }
-
-        const token = jwt.sign(
-          { userId: user.id },
-          config.get('jwtSecret'),
-          { expiresIn: '1h' }
-        )
-
-        res.status(200).json({ token, UserId: user.id })
-
-      } catch (e) {
-        res.status(500).json({ message: 'Something went wrong. Try again ...' })
+  async (req, res) => {
+    try {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+          message: 'Incorrect login data'
+        })
       }
 
+      const { email, password } = req.body
+
+      const user = await User.findOne({ email })
+
+      if (!user) {
+        return req.status(400).json({ message: 'There is no user with this email' })
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password)
+
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Wrong password' })
+      }
+
+      const token = jwt.sign(
+        { userId: user.id },
+        config.get('jwtSecret'),
+        { expiresIn: '1h' }
+      )
+
+      res.status(200).json({ token, UserId: user.id })
+
+    } catch (e) {
+      res.status(500).json({ message: 'Something went wrong. Try again ...' })
     }
-})
+
+  }
+)
 
 module.exports = router

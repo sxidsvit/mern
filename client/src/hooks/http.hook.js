@@ -12,7 +12,9 @@ export const useHttp = () => {
           body = JSON.stringify(body)
           headers['Content-Type'] = 'application/json'
         }
+        console.log('body: ', body);
         const response = await fetch(url, { method, body, headers })
+        console.log('http.hook.js -  response: ', response);
         const data = await response.json()
 
         if (!response.ok) {
