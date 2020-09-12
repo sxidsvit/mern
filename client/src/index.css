@@ -17,3 +17,11 @@ input.yellow-input:focus {
 input.yellow-input:focus+label {
   color: #ffeb3b !important;
 }
+
+.nav-wrapper {
+  padding: 0 2rem;
+}
+
+.mtop-4 {
+  margin-top: 4rem;
+}
