@@ -25,3 +25,10 @@ input.yellow-input:focus+label {
 .mtop-4 {
   margin-top: 4rem;
 }
+
+.asp-preloade {
+  display: flex;
+  justify-content: flex-start;
+  text-align: center;
+  margine-top: 10rem;
+}

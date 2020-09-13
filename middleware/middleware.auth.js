@@ -12,14 +12,22 @@ module.exports = (req, res, next) => {
 
     if (!token) {
       // protection of links for unauthorized users
-      return res.staus(401).json({ message: ' No authorization' })
+      return res.staus(401).json({ message: ' Token error. No authorization' })
     }
+
     // checking the token
-    const decoded = jwt.verify(token, config.get('jwtSecret'))
-    req.user = decoded
-    next()
+    const secret = config.get('jwtSecret')
+
+    jwt.verify(token, secret, function (err, decoded) {
+      if (err) {
+        console.log('jwt.verify() error: ', err);
+      } else {
+        req.user = decoded
+        next()
+      }
+    })
 
   } catch (e) {
-    res.status(401).json({ message: ' No authorization' })
+    res.status(401).json({ message: ' Token decoding error. No authorization' })
   }
 }
