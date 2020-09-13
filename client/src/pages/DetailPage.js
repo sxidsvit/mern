@@ -18,7 +18,6 @@ export const DetailPage = () => {
         Authorization: `Bearer ${token}`
       })
       setLink(fetched)
-      console.log('fetched: ', fetched);
     } catch (e) { console.log('DetailPage: ', e.message) }
   },
     [request, linkId, token],

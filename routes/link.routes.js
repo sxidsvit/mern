@@ -34,11 +34,11 @@ router.post('/generate', auth, async (req, res) => {
 
 router.get('/', auth, async (req, res) => {
   try {
-    // get userId from token object
-    const links = await Link.findAll({ owner: req.user.userId })
+    // get userId from request object
+    const links = await Link.find({ owner: req.user.userId })
     res.json(links)
   } catch (e) {
-    res.status(500).json({ message: 'Something went wrong. Try again ...' })
+    res.status(500).json({ message: 'Get links. Something went wrong. Try again ...' })
   }
 
 })
