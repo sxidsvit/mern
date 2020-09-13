@@ -4,13 +4,10 @@ const router = Router()
 
 
 router.get('/:code', async (req, res) => {
-  console.log('req.params.code: ', req.params.code)
 
   try {
 
-
     const link = await Link.findOne({ code: req.params.code })
-    console.log('link: ', link);
 
     if (link) {
       link.click++
