@@ -6,7 +6,7 @@ This app uses Node.js/Express/MongoDB with JWT OAuth for authentication
 
 ## Usage
 
-Add your mongoDB URI and JWT credentials to the config.env file
+Add your mongoDB URI and JWT credentials to the config/default.json file
 
 ```
 # Install dependencies
