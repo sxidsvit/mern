@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const config = require('config')
 const shortid = require('shortid')
-const Link = require('../models/LInk')
+const Link = require('../models/Link')
 const router = Router()
 const auth = require('../middleware/middleware.auth')
 
@@ -28,7 +28,7 @@ router.post('/generate', auth, async (req, res) => {
     res.status(201).json({ link })
 
   } catch (e) {
-    res.status(500).json({ message: 'Something went wrong. Try again ...' })
+    res.status(500).json({ message: 'Link router. Something went wrong. Try again ...' })
   }
 })
 
@@ -38,7 +38,7 @@ router.get('/', auth, async (req, res) => {
     const links = await Link.find({ owner: req.user.userId })
     res.json(links)
   } catch (e) {
-    res.status(500).json({ message: 'Get links. Something went wrong. Try again ...' })
+    res.status(500).json({ message: 'Link router. Get links. Something went wrong. Try again ...' })
   }
 
 })
@@ -48,7 +48,7 @@ router.get('/:id', auth, async (req, res) => {
     const link = await Link.findById(req.params.id)
     res.json(link)
   } catch (e) {
-    res.status(500).json({ message: 'Something went wrong. Try again ...' })
+    res.status(500).json({ message: 'Link router. Something went wrong. Try again ...' })
   }
 })
 

@@ -79,7 +79,7 @@ router.post('/login',
       res.status(200).json({ token, UserId: user.id })
 
     } catch (e) {
-      res.status(500).json({ message: 'Something went wrong. Try again ...' })
+      res.status(500).json({ message: 'Auth router. Something went wrong. Try again ...' })
     }
 
   }
