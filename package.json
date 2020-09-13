@@ -18,7 +18,7 @@
     "express",
     "node.js"
   ],
-  "author": "Saergiy Antonyuk <s.p.antonyuk@gmail.com>",
+  "author": "Sergiy Antonyuk <s.p.antonyuk@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
